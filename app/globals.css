@@ -90,3 +90,8 @@ body {
     transform: translateY(-10px);
   }
 }
+
+/* Animation utility classes */
+.animate-fadeIn {
+  animation: fadeIn 0.7s ease-out forwards;
+}

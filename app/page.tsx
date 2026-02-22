@@ -50,24 +50,20 @@ export default function Home() {
         }} />
       )}
       
-      {/* Main Content */}
-      <div 
-        className="transition-opacity duration-700 ease-in-out"
-        style={{ 
-          visibility: contentVisible ? 'visible' : 'hidden',
-          opacity: contentVisible ? 1 : 0,
-        }}
-      >
-        <Navigation />
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Education />
-        <Contact />
-        <Footer />
-      </div>
+      {/* Main Content - only renders when visible so animations play fresh */}
+      {contentVisible && (
+        <div className="animate-fadeIn">
+          <Navigation />
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Education />
+          <Contact />
+          <Footer />
+        </div>
+      )}
     </main>
   );
 }
