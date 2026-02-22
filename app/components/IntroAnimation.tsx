@@ -3,16 +3,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
-// Get basePath for GitHub Pages deployment
-const getBasePath = () => {
-  if (typeof window !== 'undefined') {
-    if (window.location.hostname.includes('github.io')) {
-      return '/Myportfolio';
-    }
-  }
-  return '';
-};
-
 // Inline styles for initial visibility (in case JS doesn't hydrate)
 const logoContainerStyle = {
   boxShadow: "0 25px 50px -12px rgba(236, 72, 153, 0.5)",
@@ -47,7 +37,6 @@ interface IntroAnimationProps {
 
 const IntroAnimation = ({ isLoading, onComplete }: IntroAnimationProps) => {
   const [phase, setPhase] = useState(0);
-  const basePath = getBasePath();
 
   useEffect(() => {
     if (isLoading) {
@@ -132,7 +121,7 @@ const IntroAnimation = ({ isLoading, onComplete }: IntroAnimationProps) => {
             }}
           >
             <img 
-              src={`${basePath}/hero.jpg`} 
+              src="hero.jpg" 
               alt="Divya Pavani Teeda Logo" 
               className="w-full h-full object-cover"
             />

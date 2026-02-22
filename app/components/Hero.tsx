@@ -3,19 +3,7 @@
 import { motion } from "framer-motion";
 import { CherryBlossom, Flower1, Flower2 } from "./FlowerDecoration";
 
-// Get basePath for GitHub Pages deployment
-const getBasePath = () => {
-  if (typeof window !== 'undefined') {
-    // Check if we're on GitHub Pages
-    if (window.location.hostname.includes('github.io')) {
-      return '/Myportfolio';
-    }
-  }
-  return '';
-};
-
 const Hero = () => {
-  const basePath = getBasePath();
   return (
     <section
       id="hero"
@@ -50,7 +38,7 @@ const Hero = () => {
             }}
           >
             <img 
-              src={`${basePath}/hero.jpg`} 
+              src="hero.jpg" 
               alt="Divya Pavani Teeda Logo" 
               className="w-full h-full object-cover"
             />
