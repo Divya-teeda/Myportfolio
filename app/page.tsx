@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import IntroAnimation from "./components/IntroAnimation";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
@@ -14,18 +13,26 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 export default function Home() {
-  const [showIntro, setShowIntro] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
   const [contentVisible, setContentVisible] = useState(false);
 
   useEffect(() => {
-    // Only show intro animation on client-side after hydration
-    setShowIntro(true);
+    setIsClient(true);
     
-    const timer = setTimeout(() => {
+    // Check if we already showed intro in this session
+    const introShown = sessionStorage.getItem('introShown');
+    if (introShown) {
+      setShowIntro(false);
       setContentVisible(true);
-    }, 4500);
+    } else {
+      const timer = setTimeout(() => {
+        setContentVisible(true);
+        sessionStorage.setItem('introShown', 'true');
+      }, 4500);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (
@@ -42,33 +49,29 @@ export default function Home() {
         }}
       />
       
-      {/* Intro Animation */}
-      <AnimatePresence>
-        {showIntro && !contentVisible && (
-          <IntroAnimation isLoading={!contentVisible} onComplete={() => setContentVisible(true)} />
-        )}
-      </AnimatePresence>
+      {/* Intro Animation - only on first visit */}
+      {isClient && showIntro && !contentVisible && (
+        <IntroAnimation isLoading={!contentVisible} onComplete={() => setContentVisible(true)} />
+      )}
       
-      {/* Main Content - renders fresh when contentVisible becomes true so Hero animations play */}
-      <AnimatePresence>
-        {contentVisible && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            <Navigation />
-            <Hero />
-            <About />
-            <Skills />
-            <Experience />
-            <Projects />
-            <Education />
-            <Contact />
-            <Footer />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Main Content */}
+      <div 
+        className="transition-opacity duration-700 ease-in-out"
+        style={{ 
+          visibility: contentVisible ? 'visible' : 'hidden',
+          opacity: contentVisible ? 1 : 0,
+        }}
+      >
+        <Navigation />
+        <Hero />
+        <About />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Education />
+        <Contact />
+        <Footer />
+      </div>
     </main>
   );
 }
