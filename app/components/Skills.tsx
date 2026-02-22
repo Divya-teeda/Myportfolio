@@ -98,21 +98,12 @@ const Skills = () => {
               initial={{ opacity: 0, y: 80, scale: 0.8, rotateY: 15 }}
               animate={isInView ? { opacity: 1, y: 0, scale: 1, rotateY: 0 } : { opacity: 0, y: 80, scale: 0.8, rotateY: 15 }}
               transition={{ duration: 0.7, delay: 0.1 + index * 0.12, ease: "easeOut" }}
-              whileHover={{ scale: 1.03, y: -5 }}
+              whileHover={{ scale: 1.02 }}
             >
-              <motion.div 
-                className="flex items-center gap-3 mb-5"
-                initial={{ opacity: 0, x: -30 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-              >
-                <motion.span 
-                  className="text-3xl"
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, delay: index * 0.2 }}
-                >
+              <div className="flex items-center gap-3 mb-5">
+                <span className="text-3xl">
                   {category.icon}
-                </motion.span>
+                </span>
                 <h3
                   className="text-lg font-bold"
                   style={{
@@ -123,7 +114,7 @@ const Skills = () => {
                 >
                   {category.title}
                 </h3>
-              </motion.div>
+              </div>
               <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill, i) => (
                   <motion.span

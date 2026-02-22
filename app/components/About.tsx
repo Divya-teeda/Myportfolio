@@ -122,15 +122,11 @@ const About = () => {
               initial={{ opacity: 0, y: 60, scale: 0.8 }}
               animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.8 }}
               transition={{ duration: 0.6, delay: 0.3 + index * 0.15, ease: "easeOut" }}
-              whileHover={{ scale: 1.08, y: -5 }}
+              whileHover={{ scale: 1.03 }}
             >
-              <motion.span
-                className="text-4xl md:text-5xl mb-4 block"
-                animate={{ scale: [1, 1.15, 1], rotate: [0, 5, -5, 0] }}
-                transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-              >
+              <span className="text-4xl md:text-5xl mb-4 block">
                 {item.icon}
-              </motion.span>
+              </span>
               <h3 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: item.color }}>
                 {item.title}
               </h3>

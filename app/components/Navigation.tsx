@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const tabsRefs = useRef<{ [key: string]: HTMLAnchorElement | null }>({});
+  const tickingRef = useRef(false);
 
   const navLinks = [
     { name: "Home", href: "#hero" },
@@ -28,7 +29,6 @@ const Navigation = () => {
       const containerRect = container.getBoundingClientRect();
       const tabRect = activeTab.getBoundingClientRect();
       
-      // Check if tab is outside visible area
       const isOutOfView = 
         tabRect.left < containerRect.left || 
         tabRect.right > containerRect.right;
@@ -43,34 +43,41 @@ const Navigation = () => {
     }
   }, [activeSection]);
 
-  useEffect(() => {
-    setActiveSection("hero");
-    
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-      
-      const sections = navLinks.map(link => link.href.substring(1));
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(section);
-            break;
+  // Throttled scroll handler using requestAnimationFrame
+  const handleScroll = useCallback(() => {
+    if (!tickingRef.current) {
+      requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 50);
+        
+        const sections = navLinks.map(link => link.href.substring(1));
+        for (const section of sections.reverse()) {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.top <= 150) {
+              setActiveSection(section);
+              break;
+            }
           }
         }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+        tickingRef.current = false;
+      });
+      tickingRef.current = true;
+    }
   }, []);
+
+  useEffect(() => {
+    setActiveSection("hero");
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   return (
     <motion.nav
       className="fixed top-0 left-0 right-0 z-50 w-full flex justify-center overflow-hidden"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <motion.div
         className="mx-4 mt-4 px-4 py-3 rounded-full max-w-full"
@@ -94,15 +101,14 @@ const Navigation = () => {
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.substring(1);
             return (
-              <motion.a
+              <a
                 key={link.name}
                 ref={(el) => { tabsRefs.current[link.href.substring(1)] = el; }}
                 href={link.href}
-                className="relative px-4 py-2 text-sm font-medium no-underline rounded-full transition-colors whitespace-nowrap flex-shrink-0"
+                className="relative px-4 py-2 text-sm font-medium no-underline rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200"
                 style={{
                   color: isActive ? "#be185d" : "#6b7280",
                 }}
-                whileHover={{ scale: 1.05 }}
               >
                 {isActive && (
                   <motion.div
@@ -112,11 +118,11 @@ const Navigation = () => {
                       border: "1px solid rgba(236, 72, 153, 0.25)",
                     }}
                     layoutId="activeTab"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
                   />
                 )}
                 <span className="relative z-10">{link.name}</span>
-              </motion.a>
+              </a>
             );
           })}
           
@@ -128,8 +134,9 @@ const Navigation = () => {
               background: "linear-gradient(135deg, #ec4899, #f472b6)",
               boxShadow: "0 4px 15px rgba(236, 72, 153, 0.35)",
             }}
-            whileHover={{ scale: 1.05, boxShadow: "0 6px 20px rgba(236, 72, 153, 0.45)" }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.15 }}
           >
             Hire Me
           </motion.a>

@@ -80,30 +80,29 @@ const IntroAnimation = ({ isLoading, onComplete }: IntroAnimationProps) => {
           variants={containerVariants}
           exit="exit"
         >
-          {/* Floating petals background */}
+          {/* Floating petals background - reduced for performance */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(12)].map((_, i) => (
+            {[...Array(6)].map((_, i) => (
               <motion.div
                 key={i}
                 className="absolute"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
+                  left: `${15 + i * 15}%`,
+                  top: `${10 + (i % 3) * 30}%`,
                 }}
                 animate={{
-                  y: [0, -100, 0],
-                  x: [0, (Math.random() - 0.5) * 100, 0],
-                  rotate: [0, 360],
-                  opacity: [0.3, 0.7, 0.3],
+                  y: [0, -50],
+                  opacity: [0.2, 0.5, 0.2],
                 }}
                 transition={{
-                  duration: 4 + Math.random() * 2,
+                  duration: 3,
                   repeat: Infinity,
-                  delay: Math.random() * 2,
+                  delay: i * 0.3,
+                  ease: "easeInOut",
                 }}
               >
-                <svg width="20" height="20" viewBox="0 0 20 20">
-                  <ellipse cx="10" cy="10" rx="8" ry="5" fill="#fff" opacity="0.5" />
+                <svg width="15" height="15" viewBox="0 0 20 20">
+                  <ellipse cx="10" cy="10" rx="8" ry="5" fill="#fff" opacity="0.6" />
                 </svg>
               </motion.div>
             ))}

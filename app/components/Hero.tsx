@@ -103,26 +103,28 @@ const Hero = () => {
         >
           <motion.a
             href="#contact"
-            className="px-8 py-4 rounded-full font-semibold text-white text-center inline-block"
+            className="px-8 py-4 rounded-full font-semibold text-white text-center inline-block transition-transform"
             style={{
               background: "linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #f9a8d4 100%)",
               boxShadow: "0 10px 30px rgba(236, 72, 153, 0.4)",
             }}
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.15 }}
           >
             Get In Touch
           </motion.a>
           <motion.a
             href="#projects"
-            className="px-8 py-4 rounded-full font-semibold text-center inline-block"
+            className="px-8 py-4 rounded-full font-semibold text-center inline-block transition-transform"
             style={{
               background: "rgba(255, 255, 255, 0.9)",
               border: "2px solid rgba(236, 72, 153, 0.5)",
               color: "#be185d",
             }}
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.15 }}
           >
             View Projects
           </motion.a>
