@@ -48,8 +48,12 @@ jobs:
 
       - name: Add .nojekyll file
         run: |
-          echo "" > out/.nojekyll
-          ls -la out/.nojekyll
+          touch out/.nojekyll
+          echo "Created .nojekyll file"
+          ls -la out/ | head -20
+
+      - name: List all files including hidden
+        run: find out -type f | head -30
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
