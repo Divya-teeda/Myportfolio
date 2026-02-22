@@ -13,26 +13,19 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 export default function Home() {
-  const [isClient, setIsClient] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const [contentVisible, setContentVisible] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    setMounted(true);
     
-    // Check if we already showed intro in this session
-    const introShown = sessionStorage.getItem('introShown');
-    if (introShown) {
+    const timer = setTimeout(() => {
       setShowIntro(false);
       setContentVisible(true);
-    } else {
-      const timer = setTimeout(() => {
-        setContentVisible(true);
-        sessionStorage.setItem('introShown', 'true');
-      }, 4500);
+    }, 4500);
 
-      return () => clearTimeout(timer);
-    }
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -49,9 +42,12 @@ export default function Home() {
         }}
       />
       
-      {/* Intro Animation - only on first visit */}
-      {isClient && showIntro && !contentVisible && (
-        <IntroAnimation isLoading={!contentVisible} onComplete={() => setContentVisible(true)} />
+      {/* Intro Animation */}
+      {mounted && showIntro && (
+        <IntroAnimation isLoading={showIntro} onComplete={() => {
+          setShowIntro(false);
+          setContentVisible(true);
+        }} />
       )}
       
       {/* Main Content */}

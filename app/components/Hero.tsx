@@ -3,10 +3,19 @@
 import { motion } from "framer-motion";
 import { CherryBlossom, Flower1, Flower2 } from "./FlowerDecoration";
 
-// Get basePath from environment for GitHub Pages deployment
-const basePath = process.env.NODE_ENV === 'production' ? '/Myportfolio' : '';
+// Get basePath for GitHub Pages deployment
+const getBasePath = () => {
+  if (typeof window !== 'undefined') {
+    // Check if we're on GitHub Pages
+    if (window.location.hostname.includes('github.io')) {
+      return '/Myportfolio';
+    }
+  }
+  return '';
+};
 
 const Hero = () => {
+  const basePath = getBasePath();
   return (
     <section
       id="hero"

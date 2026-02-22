@@ -3,8 +3,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
-// Get basePath from environment for GitHub Pages deployment
-const basePath = process.env.NODE_ENV === 'production' ? '/Myportfolio' : '';
+// Get basePath for GitHub Pages deployment
+const getBasePath = () => {
+  if (typeof window !== 'undefined') {
+    if (window.location.hostname.includes('github.io')) {
+      return '/Myportfolio';
+    }
+  }
+  return '';
+};
 
 // Inline styles for initial visibility (in case JS doesn't hydrate)
 const logoContainerStyle = {
@@ -40,6 +47,7 @@ interface IntroAnimationProps {
 
 const IntroAnimation = ({ isLoading, onComplete }: IntroAnimationProps) => {
   const [phase, setPhase] = useState(0);
+  const basePath = getBasePath();
 
   useEffect(() => {
     if (isLoading) {
