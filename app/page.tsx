@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import IntroAnimation from "./components/IntroAnimation";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
@@ -41,23 +42,33 @@ export default function Home() {
         }}
       />
       
-      {/* Intro Animation - only on client, covers content */}
-      {showIntro && !contentVisible && (
-        <IntroAnimation isLoading={!contentVisible} onComplete={() => setContentVisible(true)} />
-      )}
+      {/* Intro Animation */}
+      <AnimatePresence>
+        {showIntro && !contentVisible && (
+          <IntroAnimation isLoading={!contentVisible} onComplete={() => setContentVisible(true)} />
+        )}
+      </AnimatePresence>
       
-      {/* Main Content - always in DOM */}
-      <div style={{ visibility: contentVisible ? 'visible' : 'hidden' }}>
-        <Navigation />
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Education />
-        <Contact />
-        <Footer />
-      </div>
+      {/* Main Content - renders fresh when contentVisible becomes true so Hero animations play */}
+      <AnimatePresence>
+        {contentVisible && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <Navigation />
+            <Hero />
+            <About />
+            <Skills />
+            <Experience />
+            <Projects />
+            <Education />
+            <Contact />
+            <Footer />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

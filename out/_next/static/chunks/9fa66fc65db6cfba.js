@@ -10,4 +10,4 @@
             radial-gradient(ellipse at 20% 20%, rgba(252, 231, 243, 0.6) 0%, transparent 50%),
             radial-gradient(ellipse at 80% 80%, rgba(251, 207, 232, 0.4) 0%, transparent 50%),
             radial-gradient(ellipse at 50% 50%, rgba(249, 168, 212, 0.2) 0%, transparent 70%)
-          `}}),t&&!i&&(0,r.jsx)(aO,{isLoading:!i,onComplete:()=>n(!0)}),(0,r.jsxs)("div",{style:{visibility:i?"visible":"hidden"},children:[(0,r.jsx)(aW,{}),(0,r.jsx)(aH,{}),(0,r.jsx)(aq,{}),(0,r.jsx)(aG,{}),(0,r.jsx)(a_,{}),(0,r.jsx)(aJ,{}),(0,r.jsx)(aZ,{}),(0,r.jsx)(aQ,{}),(0,r.jsx)(a0,{})]})]})}t.s(["default",()=>a1],31713)}]);
+          `}}),t&&!i&&(0,r.jsx)(aO,{isLoading:!i,onComplete:()=>n(!0)}),(0,r.jsxs)("div",{style:{opacity:+!!i,transition:"opacity 0.8s ease-in-out"},children:[(0,r.jsx)(aW,{}),(0,r.jsx)(aH,{}),(0,r.jsx)(aq,{}),(0,r.jsx)(aG,{}),(0,r.jsx)(a_,{}),(0,r.jsx)(aJ,{}),(0,r.jsx)(aZ,{}),(0,r.jsx)(aQ,{}),(0,r.jsx)(a0,{})]})]})}t.s(["default",()=>a1],31713)}]);
