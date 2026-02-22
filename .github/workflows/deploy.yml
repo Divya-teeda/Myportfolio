@@ -46,14 +46,20 @@ jobs:
       - name: Build with Next.js
         run: npm run build
 
-      - name: Add .nojekyll file
+      - name: Add .nojekyll and verify
         run: |
+          # Create .nojekyll in out folder
           touch out/.nojekyll
-          echo "Created .nojekyll file"
-          ls -la out/ | head -20
-
-      - name: List all files including hidden
-        run: find out -type f | head -30
+          
+          # List files to verify
+          echo "=== Files in out folder ==="
+          ls -la out/
+          
+          echo "=== Files in _next/static/chunks ==="
+          ls out/_next/static/chunks/ | head -10
+          
+          echo "=== Verifying .nojekyll exists ==="
+          ls -la out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
